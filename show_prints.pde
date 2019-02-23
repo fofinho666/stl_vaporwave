@@ -51,7 +51,7 @@ boolean dec = false;
 public void draw() {
   background(bg);
   directionalLight(255, 255, 255, 1, 1, 1);
-  directionalLight(255, 255, 255, -1, -1, -1);
+  directionalLight(255, 255, 255, -1, -1, 1);
   
   translate(width/2, height);
   rotateY(y_speed*frameCount);
