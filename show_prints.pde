@@ -9,7 +9,7 @@ float y_speed;
 ArrayList<Print> prints;
 
 public void setup() {
-  size(800, 600, P3D);
+  size(600, 600, P3D);
 
   // Load image from unsplash
   img_url = "https://source.unsplash.com/collection/923267/"+width+"x"+height;
