@@ -46,9 +46,13 @@ public void setup_prints() {
   prints.add(print);
 }
 
+int i = 0;
+boolean dec = false;
 public void draw() {
   background(bg);
-  directionalLight(255, 255, 255, -width, -height, 500);
+  directionalLight(255, 255, 255, 1, 1, 1);
+  directionalLight(255, 255, 255, -1, -1, -1);
+  
   translate(width/2, height);
   rotateY(y_speed*frameCount);
 
@@ -99,7 +103,6 @@ class Print extends Coordinates{
       shp.vertex(t.c.x, t.c.y, t.c.z);
     }
     shp.endShape();
-    shp.setSpecular(0xFFFFFFFF);
     shp.setShininess(100);
     return shp;
 }
