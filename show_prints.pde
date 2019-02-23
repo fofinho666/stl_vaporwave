@@ -5,7 +5,7 @@ import java.util.Collection;
 
 String img_url;
 PImage bg;
-float y_speed;
+float Y_SPEED = -0.025;
 ArrayList<Print> prints;
 
 public void setup() {
@@ -14,8 +14,6 @@ public void setup() {
   // Load image from unsplash
   img_url = "https://source.unsplash.com/collection/923267/"+width+"x"+height;
   bg = loadImage(img_url, "jpg");
-
-  y_speed = 0.025f;
 
   prints = new ArrayList<Print>();
   setup_prints();
@@ -54,7 +52,7 @@ public void draw() {
   directionalLight(255, 255, 255, -1, -1, 1);
   
   translate(width/2, height);
-  rotateY(y_speed*frameCount);
+  rotateY(Y_SPEED*frameCount);
 
   scale(2);
   for (Print print : prints) {
