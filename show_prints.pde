@@ -25,23 +25,26 @@ public void setup_prints() {
 
   print_color = color(255,0,0);
   print = new Print("test.stl", print_color);
+  //print.rotate_x(180);
+  print.y = 180;
   prints.add(print);
 
   print_color = color(0,255,0);
   print = new Print("climbing.stl", print_color);
+  //print.rotate_x(180);
   prints.add(print);
 
   print_color = color(0,0,255);
   print = new Print("Peeking1_fillets.stl", print_color);
-  print.x = -10;
-  print.y = -180;
+  //print.rotate_x(180);
+  print.y = 180;
   prints.add(print);
  
   print_color = color(255, 204, 0);
   print = new Print("Caesar_With_Supports.stl", print_color);
-  print.y = -60;
   print.rotate_x(90);
-  prints.add(print);
+  print.y = 60;
+  //prints.add(print);
 }
 
 int i = 0;
@@ -81,6 +84,7 @@ class Print extends Coordinates{
   }
   
   private PShape Mesh3DToPShapeSmooth(final Mesh3D m) {
+    m.center(new Vec3D());
     m.computeVertexNormals();
     PShape shp;
     Collection<Face> triangles = m.getFaces();
