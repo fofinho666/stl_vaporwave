@@ -6,6 +6,7 @@ import java.util.Collection;
 String img_url;
 PImage bg;
 float Y_SPEED = -0.025;
+int BACKGROUND_REFRESH_TIME = 60;
 ArrayList<Print> prints;
 
 public void setup() {
@@ -47,8 +48,6 @@ public void setup_prints() {
   //prints.add(print);
 }
 
-int i = 0;
-boolean dec = false;
 public void draw() {
   background(bg);
   directionalLight(255, 255, 255, 1, 1, 1);
@@ -62,7 +61,7 @@ public void draw() {
     print.draw_print();  
   }
   
-  if (frameCount % 500 == 0) {
+  if (frameCount % (BACKGROUND_REFRESH_TIME*60) == 0) {
     thread("reload_background");
   }
 }
