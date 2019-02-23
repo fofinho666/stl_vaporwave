@@ -121,13 +121,13 @@ class Print extends Coordinates{
   
   public void draw_print(){
     pushMatrix();
-  
-    translate(this.x, this.y, this.z);
-  
+    
     rotateX(this.rotation.x);
     rotateY(this.rotation.y);
     rotateZ(this.rotation.z);
-
+    
+    translate(this.x, this.y, this.z);
+  
     shape(this.shape);
     
     popMatrix();
