@@ -126,7 +126,7 @@ class Print extends Coordinates{
     rotateY(this.rotation.y);
     rotateZ(this.rotation.z);
     
-    translate(this.x, this.y, this.z);
+    translate(this.x, -this.y, this.z);
   
     shape(this.shape);
     
