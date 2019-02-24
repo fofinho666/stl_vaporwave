@@ -66,6 +66,12 @@ public void draw() {
   }
 }
 
+void mouseClicked(){
+  if (mouseButton == RIGHT){
+    // Function goes here.
+  }
+}
+
 public void reload_background() {
   bg = loadImage(img_url, "jpg");
 }
