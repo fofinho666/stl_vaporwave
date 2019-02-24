@@ -79,17 +79,20 @@ public void reload_background() {
 
 class Print extends Coordinates{
   PShape shape;
+  Mesh3D mesh;
   Angles rotation = new Angles();
   
   Print(String stl_path, color tempfilament) {
     super();
+    
     Mesh3D mesh = new STLReader().loadBinary(sketchPath(stl_path), STLReader.TRIANGLEMESH);
-    this.shape = this.Mesh3DToPShapeSmooth(mesh);
+    this.mesh = mesh;
+    this.sync_mesh_center();
+    this.shape = this.mesh3D_to_pshape(this.mesh);
     this.shape.setFill(tempfilament);
   }
   
-  private PShape Mesh3DToPShapeSmooth(final Mesh3D m) {
-    m.center(new Vec3D());
+  private PShape mesh3D_to_pshape(final Mesh3D m) {
     m.computeVertexNormals();
     PShape shp;
     Collection<Face> triangles = m.getFaces();
@@ -112,7 +115,33 @@ class Print extends Coordinates{
     shp.endShape();
     shp.setShininess(100);
     return shp;
-}
+  }
+  
+  private void sync_mesh_center(){
+    this.mesh.center(new Vec3D(this.x, this.y, this.z));
+  }
+  
+  public void move_x(float x){
+    this.x=x;
+    this.sync_mesh_center();
+  }
+  
+  public void move_y(float y){
+    this.y=y;
+    this.sync_mesh_center();
+  }
+  
+  public void move(float z){
+    this.z=z;
+    this.sync_mesh_center();
+  }
+  
+  public void move(float x, float y, float z){
+    this.x=x;
+    this.y=y;
+    this.z=z;
+    this.sync_mesh_center();
+  }
   
   public void rotate_x(float rotation_x) {
     this.rotation.set_x(rotation_x);
