@@ -1,18 +1,18 @@
 class Coordinates {
-  int x=0;
-  int y=0;
-  int z=0;
+  float x=0;
+  float y=0;
+  float z=0;
 
   Coordinates() { 
   }
-  Coordinates(int x) { 
+  Coordinates(float x) { 
     this.x=x;
   }
-  Coordinates(int x, int y) { 
+  Coordinates(float x, float y) { 
     this.x=x;
     this.y=y;
   }
-  Coordinates(int x, int y, int z) { 
+  Coordinates(float x, float y, float z) { 
     this.x=x;
     this.y=y;
     this.z=z;
