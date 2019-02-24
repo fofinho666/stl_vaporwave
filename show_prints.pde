@@ -1,8 +1,10 @@
 import toxi.geom.*;
 import toxi.geom.mesh.*;
+import toxi.processing.*;
 import processing.opengl.*;
 import java.util.Collection;
 
+ToxiclibsSupport gfx;
 String img_url;
 PImage bg;
 float Y_SPEED = -0.025;
@@ -15,7 +17,8 @@ public void setup() {
   // Load image from unsplash
   img_url = "https://source.unsplash.com/collection/923267/"+width+"x"+height;
   bg = loadImage(img_url, "jpg");
-
+  
+  gfx = new ToxiclibsSupport(this);
   prints = new ArrayList<Print>();
   setup_prints();
 }
@@ -57,6 +60,7 @@ public void draw() {
   rotateY(Y_SPEED*frameCount);
 
   scale(2);
+  gfx.origin(100);
   for (Print print : prints) {
     print.draw_print();  
   }
