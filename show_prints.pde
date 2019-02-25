@@ -32,16 +32,9 @@ public void setup_prints() {
   // fetch all stl files on the folder 
   ArrayList<String> filenames = get_stl_filenames();
   for (String filename : filenames){
-    load_print(filename);
-  }
-  
-  //while(print1.mesh.getBoundingBox().intersectsBox(print2.mesh.getBoundingBox())){
-  //  print1.update_x(print1.x+1);
+    Print new_print = load_print(filename);
     
-    //println(print1);
-    //println(print2);
-    //println(print1.getBoundingBox().intersectsBox(print2.getBoundingBox()));
-  //}
+    for (Print fixed_print : prints){
 }
 
 public void draw() {
@@ -83,9 +76,17 @@ public void reload_background() {
 
 public ArrayList<String> get_stl_filenames() {
   ArrayList<String> filenames = new ArrayList<String>();
-  File dir = new File(sketchPath());
   
-  for (File file : dir.listFiles())
+  File directory = new File(sketchPath());
+  File files[] = directory.listFiles();
+  
+  Arrays.sort(files, new Comparator<File>() {
+    public int compare(File f1, File f2) {
+      return -Long.compare(f1.length(), f2.length());
+    }
+  });
+  
+  for (File file : files)
     if (file.getName().endsWith((".stl")))
       filenames.add(file.getName());
   return filenames;
@@ -95,8 +96,21 @@ public color randomColor(){
   return color(random(255), random(255), random(255));
 }
 
-public void load_print(String filename){
+public Print load_print(String filename){
   color print_color = randomColor();
   Print print = new Print(filename, print_color);
-  prints.add(print);
+  return print;
+}
+
+public Print arrange_print(Print print, Print fixed_print){
+  while(print.getBoundingBox().intersectsBox(fixed_print.getBoundingBox())){
+    float inc = 50.0;
+    float x_inc = random(-inc, inc);
+    float y_inc = random(-inc, inc);
+    float z_inc = random(-inc, inc);
+    print.update_x(print.x+x_inc);
+    print.update_y(print.y+y_inc);
+    print.update_z(print.z+z_inc);
+  }
+  return print;
 }
