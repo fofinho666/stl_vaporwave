@@ -1,16 +1,18 @@
 import toxi.geom.*;
 import toxi.geom.mesh.*;
-import toxi.processing.*;
+//import toxi.processing.*;
+import java.util.Comparator;
 import java.util.Collection;
 import java.io.File;
+import java.util.Arrays;
 
 
-ToxiclibsSupport gfx;
+//ToxiclibsSupport gfx;
 String img_url;
 PImage bg;
 float Y_SPEED = -0.025;
 int CAMERA_ROTATION = 0;
-int BACKGROUND_REFRESH_TIME = 60;
+int BACKGROUND_REFRESH_TIME = 5;
 ArrayList<Print> prints;
 
 public void setup() {
@@ -20,7 +22,7 @@ public void setup() {
   img_url = "https://source.unsplash.com/collection/923267/"+width+"x"+height;
   bg = loadImage(img_url, "jpg");
   
-  gfx = new ToxiclibsSupport(this);
+  //gfx = new ToxiclibsSupport(this);
   
   prints = new ArrayList<Print>();
   setup_prints();
@@ -35,6 +37,10 @@ public void setup_prints() {
     Print new_print = load_print(filename);
     
     for (Print fixed_print : prints){
+      new_print = arrange_print(new_print, fixed_print);
+    }
+    prints.add(new_print);
+  }
 }
 
 public void draw() {
@@ -52,7 +58,7 @@ public void draw() {
   camera(xpos, ypos, zpos, 0, 0, 0, 0, -1, 0);
 
   scale(1.25);
-  gfx.origin(100);
+  //gfx.origin(100);
   
   for (Print print : prints) {
     print.draw();  
