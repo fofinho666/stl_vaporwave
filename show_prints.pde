@@ -41,7 +41,7 @@ public void setup_prints() {
     //println(print1);
     //println(print2);
     //println(print1.getBoundingBox().intersectsBox(print2.getBoundingBox()));
-  }
+  //}
 }
 
 public void draw() {
@@ -77,7 +77,7 @@ void mouseClicked(){
   }
 }
 
-public void reload_Background() {
+public void reload_background() {
   bg = loadImage(img_url, "jpg");
 }
 
