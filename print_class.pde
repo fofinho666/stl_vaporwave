@@ -5,7 +5,7 @@ class Print extends Coordinates{
   
   Print(String stl_path, color filament) {
     super(0,0,0);
-    this.mesh = new STLReader().loadBinary(sketchPath(stl_path), STLReader.TRIANGLEMESH);
+    this.mesh = new STLReader().loadBinary(stl_path, STLReader.TRIANGLEMESH);
     this.filament= filament;
     this.sync_center();
   }

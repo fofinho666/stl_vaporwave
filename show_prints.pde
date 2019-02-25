@@ -6,13 +6,13 @@ import java.util.Collection;
 import java.io.File;
 import java.util.Arrays;
 
-
 //ToxiclibsSupport gfx;
 String img_url;
 PImage bg;
 float Y_SPEED = -0.025;
 int CAMERA_ROTATION = 0;
 int BACKGROUND_REFRESH_TIME = 5;
+String stl_directory;
 ArrayList<Print> prints;
 
 public void setup() {
@@ -21,6 +21,7 @@ public void setup() {
   // Load image from unsplash
   img_url = "https://source.unsplash.com/collection/923267/"+width+"x"+height;
   bg = loadImage(img_url, "jpg");
+  stl_directory = sketchPath() + "/stl/";
   
   //gfx = new ToxiclibsSupport(this);
   
@@ -82,19 +83,25 @@ public void reload_background() {
 
 public ArrayList<String> get_stl_filenames() {
   ArrayList<String> filenames = new ArrayList<String>();
+  try{
+    File directory = new File(stl_directory);
+    File files[] = directory.listFiles();
+
+    Arrays.sort(files, new Comparator<File>() {
+      public int compare(File f1, File f2) {
+        return -Long.compare(f1.length(), f2.length());
+      }
+    });
   
-  File directory = new File(sketchPath());
-  File files[] = directory.listFiles();
-  
-  Arrays.sort(files, new Comparator<File>() {
-    public int compare(File f1, File f2) {
-      return -Long.compare(f1.length(), f2.length());
-    }
-  });
-  
-  for (File file : files)
-    if (file.getName().endsWith((".stl")))
-      filenames.add(file.getName());
+    for (File file : files)
+      if (file.getName().endsWith((".stl"))){
+        String filename = stl_directory + file.getName();
+        filenames.add(filename);
+      }
+  } 
+  catch(NullPointerException e){
+    filenames = new ArrayList<String>();
+  }
   return filenames;
 }
 
