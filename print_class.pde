@@ -33,9 +33,6 @@ class Print extends Coordinates{
     this.shape.setShininess(100);
   }
   
-  public Sphere getBoundingSphere(){
-    return this.mesh.getBoundingSphere();
-  }
   public AABB getBoundingBox(){
     return this.mesh.getBoundingBox();
   }

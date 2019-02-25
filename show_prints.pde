@@ -25,12 +25,10 @@ public void setup() {
   
   //gfx = new ToxiclibsSupport(this);
   
-  prints = new ArrayList<Print>();
   setup_prints();
 }
 
 public void setup_prints() {
-  
   prints = new ArrayList<Print>();
   // fetch all stl files on the folder 
   ArrayList<String> filenames = get_stl_filenames();
@@ -120,7 +118,9 @@ public Print load_print(String filename){
 }
 
 public Print arrange_print(Print print, Print fixed_print){
-  while(print.getBoundingBox().intersectsBox(fixed_print.getBoundingBox())){
+  for(int attempts=0; print.getBoundingBox().intersectsBox(fixed_print.getBoundingBox()); attempts++){
+    if (attempts==200)
+      break;
     float inc = 50.0;
     float x_inc = random(-inc, inc);
     float y_inc = random(-inc, inc);
