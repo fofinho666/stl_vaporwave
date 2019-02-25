@@ -57,7 +57,8 @@ public void draw() {
   float xpos = cos(radians(CAMERA_ROTATION))*orbitRadius;
   float zpos = sin(radians(CAMERA_ROTATION))*orbitRadius;
   camera(xpos, ypos, zpos, 0, 0, 0, 0, -1, 0);
-
+  
+  rotateX(radians(-90));
   scale(1.25);
   //gfx.origin(100);
   
