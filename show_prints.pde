@@ -59,7 +59,7 @@ public void draw() {
   camera(xpos, ypos, zpos, 0, 0, 0, 0, -1, 0);
   
   rotateX(radians(-90));
-  scale(1.25);
+  scale(1.5);
   //gfx.origin(100);
   
   for (Print print : prints) {
@@ -79,7 +79,10 @@ void mouseClicked(){
 }
 
 public void reload_background() {
-  bg = loadImage(img_url, "jpg");
+  PImage new_bg = loadImage(img_url, "jpg");
+  if (new_bg != null){
+    bg = new_bg;
+  }
 }
 
 public ArrayList<String> get_stl_filenames() {
