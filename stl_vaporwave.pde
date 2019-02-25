@@ -11,29 +11,32 @@ String img_url;
 PImage bg;
 float Y_SPEED = -0.025;
 int CAMERA_ROTATION = 0;
-int BACKGROUND_REFRESH_TIME = 5;
-String stl_directory;
+int BACKGROUND_REFRESH_TIME = 15;
+int FOLDER_REFRESH_TIME = 60;
 ArrayList<Print> prints;
+FileManagement file_management;
 
 public void setup() {
   size(600, 600, P3D);
-
+  
   // Load image from unsplash
   img_url = "https://source.unsplash.com/collection/923267/"+width+"x"+height;
   bg = loadImage(img_url, "jpg");
-  stl_directory = sketchPath() + "/stl/";
+  String stl_directory = sketchPath() + "/stl";
   
   //gfx = new ToxiclibsSupport(this);
   
+  file_management = new FileManagement(stl_directory);
   setup_prints();
 }
 
 public void setup_prints() {
-  prints = new ArrayList<Print>();
   // fetch all stl files on the folder 
-  ArrayList<String> filenames = get_stl_filenames();
+  ArrayList<String> filenames = file_management.get_stl_filenames();
+  prints = new ArrayList<Print>();
   for (String filename : filenames){
-    Print new_print = load_print(filename);
+    color print_color = randomColor();
+    Print new_print = new Print(filename, print_color);
     
     for (Print fixed_print : prints){
       new_print = arrange_print(new_print, fixed_print);
@@ -64,9 +67,13 @@ public void draw() {
     print.draw();  
   }
   
-  if (frameCount % (BACKGROUND_REFRESH_TIME*60) == 0) {
+  if (frameCount % (BACKGROUND_REFRESH_TIME*60) == 0) 
     thread("reload_background");
-  }
+  
+  if (frameCount % (FOLDER_REFRESH_TIME*60) == 0) 
+    if (file_management.directoryHasChanged())
+      setup_prints();
+  
   CAMERA_ROTATION++;
 }
 
@@ -83,38 +90,8 @@ public void reload_background() {
   }
 }
 
-public ArrayList<String> get_stl_filenames() {
-  ArrayList<String> filenames = new ArrayList<String>();
-  try{
-    File directory = new File(stl_directory);
-    File files[] = directory.listFiles();
-
-    Arrays.sort(files, new Comparator<File>() {
-      public int compare(File f1, File f2) {
-        return -Long.compare(f1.length(), f2.length());
-      }
-    });
-  
-    for (File file : files)
-      if (file.getName().endsWith((".stl"))){
-        String filename = stl_directory + file.getName();
-        filenames.add(filename);
-      }
-  } 
-  catch(NullPointerException e){
-    filenames = new ArrayList<String>();
-  }
-  return filenames;
-}
-
 public color randomColor(){
   return color(random(255), random(255), random(255));
-}
-
-public Print load_print(String filename){
-  color print_color = randomColor();
-  Print print = new Print(filename, print_color);
-  return print;
 }
 
 public Print arrange_print(Print print, Print fixed_print){
